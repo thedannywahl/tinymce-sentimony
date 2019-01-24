@@ -43,18 +43,31 @@ const plugin = editor => {
       i,
       data
     ) {
-      //console.log('sentiment', data)
+      console.log('sentiment', data)
       editor.theme.panel
         .find('#sentimony')[0]
         .innerHtml(`<a id="emotion" href="#">${getComparativeEmotion(data.comparative)}</a>`)
     });
   });
+
+  return {
+    getMetadata: function () {
+      return  {
+        name: "Sentimony",
+        url: "https://github.com/thedannywahl/sentimony/"
+      }
+    }
+  }
 };
 
 function getComparativeEmotion(comparative) {
   if (comparative > 0) return '😀';
   if (comparative < 0) return '😟'
   return '';
+}
+
+function showAnalysis() {
+  return "blah blah blah";
 }
 
 
