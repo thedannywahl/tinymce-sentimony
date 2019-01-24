@@ -4,11 +4,10 @@ var sentiment = new Sentiment();
 
 const plugin = editor => {
   editor.on('init', function() {
-    tinymce.DOM.loadCSS('./plugin.css');
+    tinymce.DOM.loadCSS('./src/plugin.css');
     let statusbar =
       editor.theme.panel && editor.theme.panel.find('#statusbar')[0];
     if (statusbar) {
-      console.log('statusbar', statusbar);
       statusbar.insert(
         {
           type: 'label',
@@ -26,7 +25,7 @@ const plugin = editor => {
                   items: [
                     {
                       type: 'label',
-                      text: 'blah blah blah'
+                      text: showAnalysis()
                     }
                   ]
                 }
@@ -44,16 +43,19 @@ const plugin = editor => {
       i,
       data
     ) {
-      console.log('sentiment', data);
-      let emotion = '';
-      if (data.comparative > 0) emotion = '😀';
-      if (data.comparative < 0) emotion = '😟';
-
+      //console.log('sentiment', data)
       editor.theme.panel
         .find('#sentimony')[0]
-        .innerHtml(`<a id="emotion" href="#">${emotion}</a>`);
+        .innerHtml(`<a id="emotion" href="#">${getComparativeEmotion(data.comparative)}</a>`)
     });
   });
 };
+
+function getComparativeEmotion(comparative) {
+  if (comparative > 0) return '😀';
+  if (comparative < 0) return '😟'
+  return '';
+}
+
 
 export default plugin;
