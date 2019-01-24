@@ -1,0 +1,32 @@
+This is an attempt to map official unicode emoji to a scale (0 to 1) of the core emotions (Plutchik).  Intensity scores are provided via NRC Affect Intensity Lexicon (Mohammad).  Emoji scales start with an emoji representing the current emotion, not neutral (Hall).
+
+Neutral:  https://unicode.org/emoji/charts/full-emoji-list.html#face-neutral
+U+1F636 😶  (face without mouth)
+
+Joy:  https://unicode.org/emoji/charts/full-emoji-list.html#face-positive
+U+1F642 🙂  (slightly smiling face)
+U+1F60A 😊  (smiling face with smiling eyes)
+U+1F600 😀  (grinning face)
+U+1F603 😃  (grinning face with big eyes)
+U+1F601 😁  (beaming face with smiling eyes)
+
+Sadness:  https://unicode.org/emoji/charts/full-emoji-list.html#face-negative
+U+1F641 🙁  (slightly frowning face)
+U+1F61E 😞  (disappointed face)
+U+1F626 😦  (frowning face with open mouth)
+U+1F622 😢  (crying face)
+U+1F62D 😭  (loudly crying face)
+
+Anger:  https://unicode.org/emoji/charts/full-emoji-list.html#face-negative
+U+1F62C 😬  (grimacing face)
+U+1F620 😠  (angry face)
+U+1F621 😡  (pouting face)
+U+1F624 😤  (face with steam from nose)
+U+1F92C 🤬  (face with symbols on mouth)
+
+Fear: https://unicode.org/emoji/charts/full-emoji-list.html#face-negative
+U+1F61F 😟  (worried face)
+U+1F627 😧  (anguished face)
+U+1F628 😨  (fearful face)
+U+1F630 😰  (anxious face with sweat)
+U+1F631 😱  (face screaming in fear)
