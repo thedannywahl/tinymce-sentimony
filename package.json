@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "description": "sentimony TinyMCE plugin repo",
   "scripts": {
-    "start":
-      "webpack-dev-server --config config/webpack.config.dev.js --progress --open --inline",
+    "start": "webpack-dev-server --config config/webpack.config.dev.js --progress --open --inline",
     "lint": "eslint 'src/**/*.js'",
     "build": "webpack --config config/webpack.config.prod.js --progress"
   },
@@ -23,7 +22,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.11",
     "sentiment": "^5.0.1"
   },
   "license": "MIT"
