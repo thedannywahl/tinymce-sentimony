@@ -3,8 +3,7 @@ import Sentiment from 'sentiment'
 let sentiment = new Sentiment()
 
 const plugin = editor => {
-  let globalData = {};
-  console.log("GD", globalData)
+  let globalData = {}
   editor.on('init', function() {
     tinymce.DOM.loadCSS('./src/plugin.css')
     let statusbar =
@@ -14,7 +13,7 @@ const plugin = editor => {
         {
           type: 'label',
           name: 'sentimony',
-          html: '<a id="emotion" href="#"></a>',
+          html: '<a id="emotion" href="#" role="img" aria-label="" hidden></a>',
           classes: 'sentimony',
           disabled: editor.settings.readonly,
           onclick: function() {
@@ -41,16 +40,12 @@ const plugin = editor => {
   })
 
   editor.on('Change', function(e) {
-    sentiment.analyze(editor.getContent({ format: 'raw' }), {}, function(
-      i,
-      data
-    ) {
+    sentiment.analyze(editor.getContent({ format:'raw'}),{},function(i,data) {
       globalData = data
-      console.log('sentiment', globalData)
-      editor.theme.panel
-        .find('#sentimony')[0]
-        .innerHtml(`<a id="emotion" href="#">${getComparativeEmotion(data.comparative)}</a>`)
+      console.log('sentiment:', globalData)
+      setComparativeEmotion(globalData.comparative)
     })
+
   })
 
   return {
@@ -63,15 +58,27 @@ const plugin = editor => {
   }
 }
 
-function getComparativeEmotion(comparative) {
-  if (comparative > 0) return '😀'
-  if (comparative < 0) return '😟'
-  return ''
+function setComparativeEmotion(comparative) {
+  let emotion = document.getElementById("emotion")
+  if (comparative > 0) {
+    emotion.setAttribute("aria-label", "Grinning Face")
+    emotion.innerHTML = '&#x1F600;' //😀
+    emotion.hidden = false
+  }
+  if (comparative < 0) {
+    emotion.setAttribute("aria-label", "Slightly Frowning Face")
+    emotion.innerHTML = '&#x1f641;' //🙁
+    emotion.hidden = false
+  }
+  if (comparative == 0) {
+    emotion.setAttribute("aria-label", "")
+    emotion.innerHTML = ''
+    emotion.hidden = true
+  }
 }
 
 function showAnalysis(data) {
   return `score: ${data.score}`;
 }
-
 
 export default plugin
