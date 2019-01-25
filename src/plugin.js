@@ -1,12 +1,14 @@
-import _ from 'lodash';
-import Sentiment from 'sentiment';
-var sentiment = new Sentiment();
+import _ from 'lodash'
+import Sentiment from 'sentiment'
+let sentiment = new Sentiment()
 
 const plugin = editor => {
+  let globalData = {};
+  console.log("GD", globalData)
   editor.on('init', function() {
-    tinymce.DOM.loadCSS('./src/plugin.css');
+    tinymce.DOM.loadCSS('./src/plugin.css')
     let statusbar =
-      editor.theme.panel && editor.theme.panel.find('#statusbar')[0];
+      editor.theme.panel && editor.theme.panel.find('#statusbar')[0]
     if (statusbar) {
       statusbar.insert(
         {
@@ -25,50 +27,51 @@ const plugin = editor => {
                   items: [
                     {
                       type: 'label',
-                      text: showAnalysis()
+                      text: showAnalysis(globalData)
                     }
                   ]
                 }
               ]
-            });
+            })
           }
         },
         0
-      );
+      )
     }
-  });
+  })
 
   editor.on('Change', function(e) {
     sentiment.analyze(editor.getContent({ format: 'raw' }), {}, function(
       i,
       data
     ) {
-      console.log('sentiment', data)
+      globalData = data
+      console.log('sentiment', globalData)
       editor.theme.panel
         .find('#sentimony')[0]
         .innerHtml(`<a id="emotion" href="#">${getComparativeEmotion(data.comparative)}</a>`)
-    });
-  });
+    })
+  })
 
   return {
-    getMetadata: function () {
+    getMetadata: function() {
       return  {
         name: "Sentimony",
         url: "https://github.com/thedannywahl/sentimony/"
       }
     }
   }
-};
+}
 
 function getComparativeEmotion(comparative) {
-  if (comparative > 0) return '😀';
+  if (comparative > 0) return '😀'
   if (comparative < 0) return '😟'
-  return '';
+  return ''
 }
 
-function showAnalysis() {
-  return "blah blah blah";
+function showAnalysis(data) {
+  return `score: ${data.score}`;
 }
 
 
-export default plugin;
+export default plugin
