@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import Sentiment from 'sentiment'
 let sentiment = new Sentiment()
-tinymce.PluginManager.requireLangPack('sentimony', 'en_US')
+// tinymce.PluginManager.requireLangPack('sentimony', 'en_US')
 
 const plugin = editor => {
   let globalData = {}
@@ -60,7 +60,9 @@ const plugin = editor => {
     getMetadata: function() {
       return  {
         name: "Sentimony",
-        url: "https://github.com/thedannywahl/sentimony/"
+        url: "https://github.com/thedannywahl/sentimony/",
+        author: "Danny Wahl",
+        version: "0.1"
       }
     }
   }
