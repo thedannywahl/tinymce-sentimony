@@ -4,8 +4,17 @@ let sentiment = new Sentiment()
 
 const plugin = editor => {
   let globalData = {}
-  let sentimentModal = {
+
+  let sentimonyModal = {
     title: 'Sentimony',
+    width: 800,
+    height: 600,
+    buttons: [
+      {
+        text: 'OK',
+        onClick: 'close'
+      }
+    ],
     body: [
       {
         type: 'container',
@@ -20,14 +29,14 @@ const plugin = editor => {
     ]
   }
 
-  let sentimentStatusbar = {
+  let sentimonyStatusbar = {
     type: 'label',
     name: 'sentimony',
     html: '<a id="emotion" href="#" role="img" aria-label="" hidden></a>',
     classes: 'sentimony',
     disabled: editor.settings.readonly,
     onclick: function() {
-      editor.windowManager.open(sentimentModal)
+      editor.windowManager.open(sentimonyModal)
     }
   }
 
@@ -35,7 +44,7 @@ const plugin = editor => {
     tinymce.DOM.loadCSS('./src/plugin.css')
     let statusbar =
       editor.theme.panel && editor.theme.panel.find('#statusbar')[0]
-    if (statusbar) statusbar.insert(sentimentStatusbar,0)
+    if (statusbar) statusbar.insert(sentimonyStatusbar,0)
   })
 
   editor.on('Change', function(e) {
