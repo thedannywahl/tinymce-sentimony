@@ -4,39 +4,38 @@ let sentiment = new Sentiment()
 
 const plugin = editor => {
   let globalData = {}
+  let sentimentModal = {
+    title: 'Sentimony',
+    body: [
+      {
+        type: 'container',
+        layout: 'flow',
+        items: [
+          {
+            type: 'label',
+            text: showAnalysis(globalData)
+          }
+        ]
+      }
+    ]
+  }
+
+  let sentimentStatusbar = {
+    type: 'label',
+    name: 'sentimony',
+    html: '<a id="emotion" href="#" role="img" aria-label="" hidden></a>',
+    classes: 'sentimony',
+    disabled: editor.settings.readonly,
+    onclick: function() {
+      editor.windowManager.open(sentimentModal)
+    }
+  }
+
   editor.on('init', function() {
     tinymce.DOM.loadCSS('./src/plugin.css')
     let statusbar =
       editor.theme.panel && editor.theme.panel.find('#statusbar')[0]
-    if (statusbar) {
-      statusbar.insert(
-        {
-          type: 'label',
-          name: 'sentimony',
-          html: '<a id="emotion" href="#" role="img" aria-label="" hidden></a>',
-          classes: 'sentimony',
-          disabled: editor.settings.readonly,
-          onclick: function() {
-            editor.windowManager.open({
-              title: 'Sentimony',
-              body: [
-                {
-                  type: 'container',
-                  layout: 'flow',
-                  items: [
-                    {
-                      type: 'label',
-                      text: showAnalysis(globalData)
-                    }
-                  ]
-                }
-              ]
-            })
-          }
-        },
-        0
-      )
-    }
+    if (statusbar) statusbar.insert(sentimentStatusbar,0)
   })
 
   editor.on('Change', function(e) {
@@ -45,7 +44,6 @@ const plugin = editor => {
       console.log('sentiment:', globalData)
       setComparativeEmotion(globalData.comparative)
     })
-
   })
 
   return {
@@ -57,6 +55,7 @@ const plugin = editor => {
     }
   }
 }
+
 
 function setComparativeEmotion(comparative) {
   let emotion = document.getElementById("emotion")
