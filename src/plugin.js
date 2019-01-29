@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import Sentiment from 'sentiment'
 let sentiment = new Sentiment()
+tinymce.PluginManager.requireLangPack('sentimony', 'en_US')
 
 const plugin = editor => {
   let globalData = {}
@@ -64,7 +65,6 @@ const plugin = editor => {
     }
   }
 }
-
 
 function setComparativeEmotion(comparative) {
   let emotion = document.getElementById("emotion")
