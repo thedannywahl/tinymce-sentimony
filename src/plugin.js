@@ -6,38 +6,54 @@ let sentiment = new Sentiment()
 const plugin = editor => {
   let globalData = {}
 
-  let sentimonyModal = {
-    title: 'Sentimony',
-    width: 800,
-    height: 600,
-    buttons: [
-      {
-        text: 'OK',
-        onClick: 'close'
-      }
-    ],
-    body: [
-      {
-        type: 'container',
-        layout: 'flow',
-        items: [
-          {
-            type: 'label',
-            text: showAnalysis(globalData)
-          }
-        ]
-      }
-    ]
-  }
-
-  let sentimonyStatusbar = {
+  let sentimonyUI = {
     type: 'label',
     name: 'sentimony',
-    html: '<a id="emotion" href="#" role="img" aria-label="" hidden></a>',
+    html: '<a id="sentimony-emotion" href="#" role="img" aria-label="" hidden></a>',
     classes: 'sentimony',
     disabled: editor.settings.readonly,
     onclick: function() {
-      editor.windowManager.open(sentimonyModal)
+      editor.windowManager.open({
+        title: 'Sentimony',
+        buttons: [
+          {
+            text: 'OK',
+            onClick: 'close'
+          }
+        ],
+        body: [
+          {
+            type : 'listbox',
+            name : 'categories',
+            label : 'Select a category',
+            onselect: function(e) {
+              let selectedSection = this.$el[0].innerText
+              showReport(selectedSection, globalData)
+            },
+            values : [
+              { text: 'Overview', value: 'overview', selected: true },
+              { text: 'Score', value: 'Score'}
+            ]
+          },
+          {
+            type: 'container',
+            html: '<hr style="border-bottom:1px inset;">'
+          },
+          {
+            type: 'container',
+            layout: 'flow',
+            minWidth: 400,
+            minHeight: 160,
+            id: 'sentimony-report',
+            items: [
+              {
+                type: 'label',
+                text: showReport("Overview", globalData)
+              }
+            ]
+          }
+        ]
+      })
     }
   }
 
@@ -45,7 +61,7 @@ const plugin = editor => {
     tinymce.DOM.loadCSS('./src/plugin.css')
     let statusbar =
       editor.theme.panel && editor.theme.panel.find('#statusbar')[0]
-    if (statusbar) statusbar.insert(sentimonyStatusbar,0)
+    if (statusbar) statusbar.insert(sentimonyUI, 0)
   })
 
   editor.on('Change', function(e) {
@@ -69,7 +85,7 @@ const plugin = editor => {
 }
 
 function setComparativeEmotion(comparative) {
-  let emotion = document.getElementById("emotion")
+  let emotion = document.getElementById("sentimony-emotion")
   if (comparative > 0) {
     emotion.setAttribute("aria-label", "Grinning Face")
     emotion.innerHTML = '&#x1F600;' //😀
@@ -87,8 +103,17 @@ function setComparativeEmotion(comparative) {
   }
 }
 
-function showAnalysis(data) {
-  return `score: ${data.score}`;
+function showReport(section, data) {
+  let reportBody = document.getElementById("sentimony-report-body")
+  let report = "This is the overview"
+  if (reportBody) {
+    if (section == "Score") {
+      report = `Score: ${data.score}`
+    }
+    reportBody.innerHTML = report
+  } else {
+    return report // Initial view of report window
+  }
 }
 
 export default plugin

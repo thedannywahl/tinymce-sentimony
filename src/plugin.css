@@ -1,9 +1,9 @@
-#emotion {
+#sentimony-emotion {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
   margin-left: -1em;
 }
-#emotion:hover {
+#sentimony-emotion:hover {
   text-decoration: none;
 }
