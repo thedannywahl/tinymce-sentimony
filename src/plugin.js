@@ -5,7 +5,7 @@ let sentiment = new Sentiment()
 const plugin = editor => {
   let globalData = {}
 
-  let emotions = {
+  const emotions = {
     "neutral": {
       "slightly": {
         "scale": "",
@@ -252,10 +252,10 @@ const plugin = editor => {
   })
 
   editor.on('Change', function(e) {
-    sentiment.analyze(editor.getContent({ format:'raw'}),{},function(i,data) {
+    sentiment.analyze(editor.getContent({ format:'text'}),{},function(i,data) {
       globalData = data
       console.log('sentiment:', globalData)
-      setComparativeEmotion(globalData.comparative)
+      setComparativeEmotion(globalData, emotions)
     })
   })
 
@@ -271,20 +271,22 @@ const plugin = editor => {
   }
 }
 
-function setComparativeEmotion(comparative) {
+function setComparativeEmotion(data, emotions) {
 
   let emotion = document.getElementById("sentimony-emotion")
-  if (comparative > 0) {
-    emotion.setAttribute("aria-label", "Grinning Face")
-    emotion.innerHTML = '&#x1F600;' //😀
+  if (data.comparative > 0) {
+    emotion.setAttribute("aria-label", emotions.joy.moderately.name)
+    emotion.innerHTML = emotions.joy.moderately.html
     emotion.hidden = false
-  }
-  if (comparative < 0) {
-    emotion.setAttribute("aria-label", "Slightly Frowning Face")
-    emotion.innerHTML = '&#x1f641;' //🙁
+  } else if (data.comparative < 0) {
+    emotion.setAttribute("aria-label", emotions.sadness.moderately.name)
+    emotion.innerHTML = emotions.sadness.moderately.html
     emotion.hidden = false
-  }
-  if (comparative == 0) {
+  } else if ((data.comparative == 0) && (data.tokens.length > 2)) {
+    emotion.setAttribute("aria-label", emotions.neutral.moderately.name)
+    emotion.innerHTML = emotions.neutral.moderately.html
+    emotion.hidden = false
+  } else { // data.comparative == 0  && data.tokens.length <=2 ["",""]
     emotion.setAttribute("aria-label", "")
     emotion.innerHTML = ''
     emotion.hidden = true
