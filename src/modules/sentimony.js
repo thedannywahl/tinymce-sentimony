@@ -6,16 +6,16 @@ Sentimony.prototype.setComparativeEmotion = function(data, emotions) {
 
   let emotion = document.getElementById("sentimony-emotion")
   if (data.comparative > 0) {
-    emotion.setAttribute("aria-label", emotions.joy.moderately.name)
-    emotion.innerHTML = emotions.joy.moderately.html
+    emotion.setAttribute("aria-label", emotions.joy.slightly.name)
+    emotion.innerHTML = emotions.joy.slightly.html
     emotion.hidden = false
   } else if (data.comparative < 0) {
-    emotion.setAttribute("aria-label", emotions.sadness.moderately.name)
-    emotion.innerHTML = emotions.sadness.moderately.html
+    emotion.setAttribute("aria-label", emotions.sadness.slightly.name)
+    emotion.innerHTML = emotions.sadness.slightly.html
     emotion.hidden = false
   } else if ((data.comparative == 0) && (data.tokens.length > 2)) {
-    emotion.setAttribute("aria-label", emotions.neutral.moderately.name)
-    emotion.innerHTML = emotions.neutral.moderately.html
+    emotion.setAttribute("aria-label", emotions.neutral.slightly.name)
+    emotion.innerHTML = emotions.neutral.slightly.html
     emotion.hidden = false
   } else { // data.comparative == 0  && data.tokens.length <=2 ["",""]
     emotion.setAttribute("aria-label", "")
