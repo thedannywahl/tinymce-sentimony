@@ -12,6 +12,7 @@ function s(st) {
 let globalData = {}
 
 const plugin = editor => {
+  if(lang == "en") {
     tinymce.DOM.loadCSS('./src/plugin.css')
 
     editor.on('init', function() {
@@ -80,6 +81,7 @@ const plugin = editor => {
         }
       }
     }
+  }
 }
 
 export default plugin
