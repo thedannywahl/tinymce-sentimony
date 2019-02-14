@@ -2,9 +2,12 @@ import _ from 'lodash'
 import Sentiment from 'sentiment'
 let sentiment = new Sentiment()
 import emotions from './modules/emotions.json'
+import Sentimony from './modules/sentimony'
+let sentimony = new Sentimony()
+let globalData = {}
 
 const plugin = editor => {
-  let globalData = {}
+  //let globalData = {}
   let sentimonyUI = {
     type: 'label',
     name: 'sentimony',
@@ -27,7 +30,7 @@ const plugin = editor => {
             label : 'Select a category',
             onselect: function(e) {
               let selectedSection = this.$el[0].innerText
-              showReport(selectedSection, globalData)
+              sentimony.showReport(selectedSection, globalData)
             },
             values : [
               { text: 'Overview', value: 'overview', selected: true },
@@ -47,7 +50,7 @@ const plugin = editor => {
             items: [
               {
                 type: 'label',
-                text: showReport("Overview", globalData)
+                text: sentimony.showReport("Overview", globalData)
               }
             ]
           }
@@ -67,7 +70,7 @@ const plugin = editor => {
     sentiment.analyze(editor.getContent({ format:'text'}),{},function(i,data) {
       globalData = data
       console.log('sentiment:', globalData)
-      setComparativeEmotion(globalData, emotions)
+      sentimony.setComparativeEmotion(globalData, emotions)
     })
   })
 
@@ -80,41 +83,6 @@ const plugin = editor => {
         version: "0.1"
       }
     }
-  }
-}
-
-function setComparativeEmotion(data, emotions) {
-
-  let emotion = document.getElementById("sentimony-emotion")
-  if (data.comparative > 0) {
-    emotion.setAttribute("aria-label", emotions.joy.moderately.name)
-    emotion.innerHTML = emotions.joy.moderately.html
-    emotion.hidden = false
-  } else if (data.comparative < 0) {
-    emotion.setAttribute("aria-label", emotions.sadness.moderately.name)
-    emotion.innerHTML = emotions.sadness.moderately.html
-    emotion.hidden = false
-  } else if ((data.comparative == 0) && (data.tokens.length > 2)) {
-    emotion.setAttribute("aria-label", emotions.neutral.moderately.name)
-    emotion.innerHTML = emotions.neutral.moderately.html
-    emotion.hidden = false
-  } else { // data.comparative == 0  && data.tokens.length <=2 ["",""]
-    emotion.setAttribute("aria-label", "")
-    emotion.innerHTML = ''
-    emotion.hidden = true
-  }
-}
-
-function showReport(section, data) {
-  let reportBody = document.getElementById("sentimony-report-body")
-  let report = "This is the overview"
-  if (reportBody) {
-    if (section == "Score") {
-      report = `Score: ${data.score}`
-    }
-    reportBody.innerHTML = report
-  } else {
-    return report
   }
 }
 
