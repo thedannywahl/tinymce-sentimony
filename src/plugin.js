@@ -1,20 +1,17 @@
 import _ from 'lodash'
 import Sentiment from 'sentiment'
 let sentiment = new Sentiment()
-import emotions from './modules/emotions.json'
+import emotions from './modules/emotions'
 import Sentimony from './modules/sentimony'
 let sentimony = new Sentimony()
-import strs from './langs/sentimony.json'
-let lang = tinymce.util.I18n.getCode()
-function s(st) {
-  return strs[lang][st]
-}
+import Langs from './langs/sentimony'
+let s = new Langs()
+let l = tinymce.util.I18n.getCode()
 let globalData = {}
 
 const plugin = editor => {
-  if(lang == "en") {
+  if(l == "en") {
     tinymce.DOM.loadCSS('./src/plugin.css')
-
     editor.on('init', function() {
       let statusbar = editor.theme.panel && editor.theme.panel.find('#statusbar')[0]
       if (statusbar) statusbar.insert({
@@ -25,20 +22,20 @@ const plugin = editor => {
         disabled: editor.settings.readonly,
         onclick: function() {
           editor.windowManager.open({
-            title: s("title"),
-            buttons: [{text: s("ok"), onClick: 'close'}],
+            title: s.t(l, "title"),
+            buttons: [{text: s.t(l, "ok"), onClick: 'close'}],
             body: [
               {
                 type : 'listbox',
                 name : 'categories',
-                label : s("select a category"),
+                label : s.t(l, "select a category"),
                 onselect: function(e) {
                   let selectedSection = this.$el[0].innerText
                   sentimony.showReport(selectedSection, globalData)
                 },
                 values : [
-                  {text: s("overview"), value: s("overview"), selected: true},
-                  {text: s("score"), value: s("score")}
+                  {text: s.t(l, "overview"), value: s.t(l, "overview"), selected: true},
+                  {text: s.t(l, "score"), value: s.t(l, "score")}
                 ]
               },
               {
@@ -54,7 +51,7 @@ const plugin = editor => {
                 items: [
                   {
                     type: 'label',
-                    html: sentimony.showReport(s("overview"), globalData)
+                    html: sentimony.showReport(s.t(l, "overview"), globalData)
                   }
                 ]
               }
@@ -74,7 +71,7 @@ const plugin = editor => {
     return {
       getMetadata: function() {
         return  {
-          name: s("title"),
+          name: s.t(l, "title"),
           url: "https://github.com/thedannywahl/sentimony/",
           author: "Danny Wahl",
           version: "0.1"
