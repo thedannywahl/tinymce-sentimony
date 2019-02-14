@@ -3,7 +3,6 @@ var Sentimony = function(options) {
 };
 
 Sentimony.prototype.setComparativeEmotion = function(data, emotions) {
-
   let emotion = document.getElementById("sentimony-emotion")
   if (data.comparative > 0) {
     emotion.setAttribute("aria-label", emotions.joy.slightly.name)

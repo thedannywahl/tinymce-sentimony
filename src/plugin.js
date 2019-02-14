@@ -47,7 +47,7 @@ const plugin = editor => {
               items: [
                 {
                   type: 'label',
-                  text: sentimony.showReport("Overview", globalData)
+                  html: sentimony.showReport("Overview", globalData)
                 }
               ]
             }
