@@ -16,11 +16,11 @@ Sentimony.prototype.setComparativeSentiment = function(data, emotions) {
     emotion.setAttribute("aria-label", emotions.sadness.slightly.name)
     emotion.innerHTML = emotions.sadness.slightly.html
     emotion.hidden = false
-  } else if ((data.comparative == 0) && (data.tokens.length > 2)) {
+  } else if ((data.comparative == 0) && (data.tokens.length > 0)) {
     emotion.setAttribute("aria-label", emotions.neutral.slightly.name)
     emotion.innerHTML = emotions.neutral.slightly.html
     emotion.hidden = false
-  } else { // data.comparative == 0  && data.tokens.length <=2 ["",""]
+  } else {
     emotion.setAttribute("aria-label", "")
     emotion.innerHTML = ''
     emotion.hidden = true
@@ -28,15 +28,13 @@ Sentimony.prototype.setComparativeSentiment = function(data, emotions) {
 }
 
 Sentimony.prototype.showReport = function(section, data) {
-
-  let overview = s.t(l, "containerReport", data)
-  let score = `Score: ${data.score}`
-
+  let overview = s.t(l, "containerOverview", data)
+  let detail = s.t(l, "containerDetail", data)
 
   let reportBody = document.getElementById("sentimony-report-body")
   let report = overview
   if (reportBody) {
-    if (section == s.t(l, "labelScore")) report = score
+    if (section == s.t(l, "labelDetail")) report = detail
     reportBody.innerHTML = report
   } else {
     return report

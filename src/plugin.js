@@ -37,7 +37,7 @@ const plugin = editor => {
               },
               values : [
                 {text: s.t(l, "labelOverview"), value: s.t(l, "labelOverview"), selected: true},
-                {text: s.t(l, "labelScore"), value: s.t(l, "labelScore")}
+                {text: s.t(l, "labelDetail"), value: s.t(l, "labelDetail")}
               ]
             },
             {
@@ -47,7 +47,11 @@ const plugin = editor => {
             {
               type: 'container',
               id: 'sentimony-report',
+              role: 'region',
               html: sentimony.showReport(s.t(l, "labelOverview"), globalData),
+              onPostRender: function(){
+                this.getEl().setAttribute("aria-live", "polite")
+              }
             }
           ]
         },)
@@ -58,6 +62,7 @@ const plugin = editor => {
   editor.on('Change', function(e) {
     sentiment.analyze(editor.getContent({format:'text'}), {}, function(i,data) {
       globalData = data
+      globalData.tokens = globalData.tokens.filter(n => n)
       sentimony.setComparativeSentiment(globalData, emotions)
       console.log(globalData)
     })

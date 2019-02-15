@@ -12,8 +12,11 @@ Langs.prototype.strings = {
     sentimentPegative: "negative",
     labelSelectCategory: function() {return "Select a category"},
     labelOverview: function() {return "Sentiment Overview"},
-    labelScore: function() {return "Sentiment Details"},
-    containerReport: function(data) {
+    labelDetail: function() {return "Sentiment Details"},
+    containerDetail: function(data) {
+      return `<pre id="sentimony-report-details">${JSON.stringify(data, null, 2)}</pre>`
+    },
+    containerOverview: function(data) {
       let sentiment = "neutral"
       let emotion = "neutral"
       if (data.comparative > 0) {
@@ -31,11 +34,11 @@ Langs.prototype.strings = {
           sentiment because none of your words seem to have a feeling or
           emotion associated wiith them`
       }
-      return `<p><span>${strength.html}</span></p>
+      return `<p id="report-emoji"><span class="emoji" role="img" aria-label="">${strength.html}</span></p>
         <p>Overall, readers might see your sentiment as
-          <span class="keyword">${strength.scale}</span> ${sentiment}
-          because you used words like <span class="keyword">${data[sentiment][0]}</span>
-          ${data[sentiment][1] ? `and <span class="keyword">${data[sentiment][1]}</span>` : ''}
+          <span class="report-keyword">${strength.scale}</span> ${sentiment}
+          because you used words like <span class="report-keyword">${data[sentiment][0]}</span>
+          ${data[sentiment][1] ? `and <span class="report-keyword">${data[sentiment][1]}</span>` : ''}
         </p>`
     }
   }
@@ -48,7 +51,17 @@ Langs.prototype.t = function(l = 'en', s, d) {
 }
 
 Langs.prototype.comparativeToScale = function(data, emotion) {
-  return emotions[emotion]["slightly"]
+  if(data.comparative > 0) {
+    emotion = "joy"
+  }
+  if(data.comparative < 0) {
+    emotion = "sadness"
+  }
+  let scale = data.score / data.words.length
+  if (scale < 0) scale = scale * -1
+  scale = Math.ceil(scale)
+  scale = Object.keys(emotions[emotion])[scale]
+  return emotions[emotion][scale]
 }
 
 module.exports = Langs;

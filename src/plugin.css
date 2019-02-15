@@ -8,10 +8,31 @@
   text-decoration: none;
 }
 
+#sentimony-report-body {
+  height: 170px;
+  overflow-y: scroll;
+}
 #sentimony-report-body * {
   white-space: normal;
 }
 
-.keyword {
-  font-style: italic;
+#sentimony-report-details {
+  white-space: pre;
+  font-family: monospace;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  color: #000;
+  padding: 5px;
+}
+
+#report-emoji {
+  text-align: center;
+}
+#report-emoji .emoji {
+  font-size: xx-large;
+}
+
+.report-keyword { /* override `.mce-contaner *` */
+  color: #000!important;
+  border-bottom: 1px dashed!important;
 }
