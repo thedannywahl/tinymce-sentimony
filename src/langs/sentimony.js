@@ -15,7 +15,7 @@ Langs.prototype.strings = {
       if (data.score < 0) sentiment = "negative"
       return `<p>Overall, readers might see your sentiment as ${sentiment}
         because you used words like <span class="keyword">${data.negative[0]}</span>
-        ${data.negative[1] ? `and <span class="keyword">${data.negative[1]}</span>` : ''}.</p>`
+        ${data.negative[1] ? `and <span class="keyword">${data.negative[1]}</span>` : ''}</p>`
     }
   }
 }
