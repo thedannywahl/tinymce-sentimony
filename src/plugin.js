@@ -24,11 +24,14 @@ const plugin = editor => {
           editor.windowManager.open({
             title: s.t(l, "title"),
             buttons: [{text: s.t(l, "ok"), onClick: 'close'}],
+            width: 425,
+            height: 250,
+            layout: 'flex',
             body: [
               {
                 type : 'listbox',
                 name : 'categories',
-                label : s.t(l, "select a category"),
+                label : s.t(l, "selectCategory"),
                 onselect: function(e) {
                   let selectedSection = this.$el[0].innerText
                   sentimony.showReport(selectedSection, globalData)
@@ -44,19 +47,11 @@ const plugin = editor => {
               },
               {
                 type: 'container',
-                layout: 'flow',
-                minWidth: 400,
-                minHeight: 160,
                 id: 'sentimony-report',
-                items: [
-                  {
-                    type: 'label',
-                    html: sentimony.showReport(s.t(l, "overview"), globalData)
-                  }
-                ]
+                html: sentimony.showReport(s.t(l, "overview"), globalData),
               }
             ]
-          })
+          },)
         }
       }, 0)
     })
@@ -65,6 +60,7 @@ const plugin = editor => {
       sentiment.analyze(editor.getContent({format:'text'}), {}, function(i,data) {
         globalData = data
         sentimony.setComparativeEmotion(globalData, emotions)
+        console.log(globalData)
       })
     })
 

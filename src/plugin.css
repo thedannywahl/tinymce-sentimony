@@ -7,3 +7,11 @@
 #sentimony-emotion:hover {
   text-decoration: none;
 }
+
+#sentimony-report-body * {
+  white-space: normal;
+}
+
+.keyword {
+  font-style: italic;
+}
