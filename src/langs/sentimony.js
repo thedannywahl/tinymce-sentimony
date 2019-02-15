@@ -1,3 +1,5 @@
+import emotions from '../modules/emotions'
+
 var Langs = function(options) {
     this.options = options;
 };
@@ -5,24 +7,48 @@ var Langs = function(options) {
 Langs.prototype.strings = {
   en: {
     title: function() {return "Sentimony"},
-    ok: function () {return "OK"},
-    selectCategory: function() {return "Select a category"},
-    overview: function() {return "Sentiment Overview"},
-    score: function() {return "Sentiment Details"},
-    report: function(data) {
+    buttonOk: function () {return "OK"},
+    sentimentPositive: "positive",
+    sentimentPegative: "negative",
+    labelSelectCategory: function() {return "Select a category"},
+    labelOverview: function() {return "Sentiment Overview"},
+    labelScore: function() {return "Sentiment Details"},
+    containerReport: function(data) {
       let sentiment = "neutral"
-      if (data.score > 0) sentiment = "positive"
-      if (data.score < 0) sentiment = "negative"
-      return `<p>Overall, readers might see your sentiment as ${sentiment}
-        because you used words like <span class="keyword">${data.negative[0]}</span>
-        ${data.negative[1] ? `and <span class="keyword">${data.negative[1]}</span>` : ''}</p>`
+      let emotion = "neutral"
+      if (data.comparative > 0) {
+        sentiment = "positive"
+        emotion = "joy"
+      }
+      if (data.comparative < 0) {
+        sentiment = "negative"
+        emotion = "sadness"
+      }
+      let strength = Langs.prototype.comparativeToScale(data, emotion)
+
+      if (data.comparative == 0) {
+        return `<p>Overall, readers might have a hard time understanding your
+          sentiment because none of your words seem to have a feeling or
+          emotion associated wiith them`
+      }
+      return `<p><span>${strength.html}</span></p>
+        <p>Overall, readers might see your sentiment as
+          <span class="keyword">${strength.scale}</span> ${sentiment}
+          because you used words like <span class="keyword">${data[sentiment][0]}</span>
+          ${data[sentiment][1] ? `and <span class="keyword">${data[sentiment][1]}</span>` : ''}
+        </p>`
     }
   }
 }
 
+
 Langs.prototype.t = function(l = 'en', s, d) {
   if(this.strings[l] === undefined) l = 'en'
   return this.strings[l][s](d)
+}
+
+Langs.prototype.comparativeToScale = function(data, emotion) {
+  return emotions[emotion]["slightly"]
 }
 
 module.exports = Langs;

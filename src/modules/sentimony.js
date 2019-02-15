@@ -6,7 +6,7 @@ var Sentimony = function(options) {
     this.options = options;
 };
 
-Sentimony.prototype.setComparativeEmotion = function(data, emotions) {
+Sentimony.prototype.setComparativeSentiment = function(data, emotions) {
   let emotion = document.getElementById("sentimony-emotion")
   if (data.comparative > 0) {
     emotion.setAttribute("aria-label", emotions.joy.slightly.name)
@@ -29,14 +29,14 @@ Sentimony.prototype.setComparativeEmotion = function(data, emotions) {
 
 Sentimony.prototype.showReport = function(section, data) {
 
-  let overview = s.t(l, "overview report")
-  let score = `${s.t(l, "score")}: ${data.score}`
+  let overview = s.t(l, "containerReport", data)
+  let score = `Score: ${data.score}`
 
 
   let reportBody = document.getElementById("sentimony-report-body")
   let report = overview
   if (reportBody) {
-    if (section == s.t(l, "score")) report = score
+    if (section == s.t(l, "labelScore")) report = score
     reportBody.innerHTML = report
   } else {
     return report

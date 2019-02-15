@@ -22,7 +22,7 @@ const plugin = editor => {
       onclick: function() {
         editor.windowManager.open({
           title: s.t(l, "title"),
-          buttons: [{text: s.t(l, "ok"), onClick: 'close'}],
+          buttons: [{text: s.t(l, "buttonOk"), onClick: 'close'}],
           width: 425,
           height: 250,
           layout: 'flex',
@@ -30,14 +30,14 @@ const plugin = editor => {
             {
               type : 'listbox',
               name : 'categories',
-              label : s.t(l, "selectCategory"),
+              label : s.t(l, "labelSelectCategory"),
               onselect: function(e) {
                 let selectedSection = this.$el[0].innerText
                 sentimony.showReport(selectedSection, globalData)
               },
               values : [
-                {text: s.t(l, "overview"), value: s.t(l, "overview"), selected: true},
-                {text: s.t(l, "score"), value: s.t(l, "score")}
+                {text: s.t(l, "labelOverview"), value: s.t(l, "labelOverview"), selected: true},
+                {text: s.t(l, "labelScore"), value: s.t(l, "labelScore")}
               ]
             },
             {
@@ -47,7 +47,7 @@ const plugin = editor => {
             {
               type: 'container',
               id: 'sentimony-report',
-              html: sentimony.showReport(s.t(l, "overview"), globalData),
+              html: sentimony.showReport(s.t(l, "labelOverview"), globalData),
             }
           ]
         },)
@@ -58,7 +58,7 @@ const plugin = editor => {
   editor.on('Change', function(e) {
     sentiment.analyze(editor.getContent({format:'text'}), {}, function(i,data) {
       globalData = data
-      sentimony.setComparativeEmotion(globalData, emotions)
+      sentimony.setComparativeSentiment(globalData, emotions)
       console.log(globalData)
     })
   })
