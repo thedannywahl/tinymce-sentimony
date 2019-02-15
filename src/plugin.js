@@ -74,7 +74,7 @@ const plugin = editor => {
         name: s.t(l, "title"),
         url: "https://github.com/thedannywahl/sentimony/",
         author: "Danny Wahl",
-        version: "0.1"
+        version: "1.0.0"
       }
     }
   }
