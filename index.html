@@ -1,15 +1,27 @@
-# sentimony TinyMCE Plugin
-
-Welcome stranger! This is a repo containing the sentimony TinyMCE plugin.
-
-## The development server
-
-By running the `npm start` command you start the development server and open a browser window with an instance of TinyMCE with your plugin added to it. This window will reload automatically whenever a change is detected in the `index.html` file in the `static` folder or in one of the JavaScript files in the `src` directory.
-
-## The production build
-
-By running the `npm run build` command Webpack will create a `dist` directory with a child directory with the name of your plugin (sentimony) containing three files:
-
-* `plugin.js` - the bundled plugin
-* `plugin.min.js` - the bundles, uglified and minified plugin
-* `LICENSE` - a file explaining the license of your plugin (copied over from `src/LICENSE`) 
+<doctype html>
+<html>
+  <head>
+    <title>Sentimony Demo</title>
+  </head>
+  <body>
+    <textarea id="tiny"></textarea>
+    <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=hyr4pz6958k872n6z2yvu2e3foqk15i57ggcfx8tvb3wloxu"></script>
+    <script src="https://cdn.jsdelivr.net/gh/thedannywahl/sentimony@master/dist/sentimony/plugin.min.js"></script>
+    <script>
+      tinymce.init({
+        selector: 'textarea',
+        menubar: false,
+        plugins: [
+          'sentimony advlist autolink lists link image charmap print preview anchor textcolor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+        content_css: [
+          '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+          '//www.tiny.cloud/css/codepen.min.css'
+        ]
+      });
+    </script>
+  </body>
+</html>
