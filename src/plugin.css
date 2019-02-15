@@ -1,8 +1,9 @@
+.mce-sentimony {
+  padding: 5px 0;
+}
+
 #sentimony-emotion {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  margin-left: -1em;
+  padding: 0 2px 0 5px;
 }
 #sentimony-emotion:hover {
   text-decoration: none;
