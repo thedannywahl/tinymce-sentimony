@@ -64,7 +64,6 @@ const plugin = editor => {
       globalData = data
       globalData.tokens = globalData.tokens.filter(n => n)
       sentimony.setComparativeSentiment(globalData, emotions)
-      console.log(globalData)
     })
   })
 
