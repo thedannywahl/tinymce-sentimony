@@ -1,4 +1,4 @@
-# sentimony TinyMCE Plugin
+# Sentimony TinyMCE Plugin
 
 ![sentimony](/sentimony.png?raw=true)
 
@@ -27,7 +27,9 @@ Visit the [releases](https://www.google.com) page.
 
 ## Using Sentimony
 
-```tinymce.init({
+```
+tinymce.init({
   selector:'textarea',
   plugins: 'sentimony'
-});```
+});
+```
