@@ -1,5 +1,7 @@
 # sentimony TinyMCE Plugin
 
+![sentimony](/sentimony.png?raw=true)
+
 Welcome stranger! This is a repo containing the sentimony TinyMCE plugin.
 
 ## Test it out
