@@ -36,9 +36,10 @@ Langs.prototype.strings = {
       }
       return `<p id="report-emoji"><span class="emoji" role="img" aria-label="">${strength.html}</span></p>
         <p>Overall, readers might see your sentiment as
-          <span class="report-keyword">${strength.scale}</span> ${sentiment}
+          <span class="report-keyword">${strength.scale}</span>
+          <span class="report-keyword">${sentiment}</span>
           because you used words like <span class="report-keyword">${data[sentiment][0]}</span>
-          ${data[sentiment][1] ? `and <span class="report-keyword">${data[sentiment][1]}</span>` : ''}
+          ${data[sentiment][1] ? `and <span class="report-keyword">${data[sentiment][1]}</span>` : ''}.
         </p>`
     }
   }
