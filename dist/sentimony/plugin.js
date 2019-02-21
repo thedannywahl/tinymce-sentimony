@@ -121,7 +121,7 @@ Langs.prototype.strings = {
       if (data.comparative == 0) {
         return "<p>Overall, readers might have a hard time understanding your\n          sentiment because none of your words seem to have a feeling or\n          emotion associated wiith them";
       }
-      return "<p id=\"report-emoji\"><span class=\"emoji\" role=\"img\" aria-label=\"\">" + strength.html + "</span></p>\n        <p>Overall, readers might see your sentiment as\n          <span class=\"report-keyword\">" + strength.scale + "</span> " + sentiment + "\n          because you used words like <span class=\"report-keyword\">" + data[sentiment][0] + "</span>\n          " + (data[sentiment][1] ? "and <span class=\"report-keyword\">" + data[sentiment][1] + "</span>" : '') + "\n        </p>";
+      return "<p id=\"report-emoji\"><span class=\"emoji\" role=\"img\" aria-label=\"\">" + strength.html + "</span></p>\n        <p>Overall, readers might see your sentiment as\n          <span class=\"report-keyword\">" + strength.scale + "</span>\n          <span class=\"report-keyword\">" + sentiment + "</span>\n          because you used words like <span class=\"report-keyword\">" + data[sentiment][0] + "</span>\n          " + (data[sentiment][1] ? "and <span class=\"report-keyword\">" + data[sentiment][1] + "</span>" : '') + ".\n        </p>";
     }
   }
 };
@@ -258,7 +258,6 @@ var plugin = function plugin(editor) {
         return n;
       });
       sentimony.setComparativeSentiment(globalData, _emotions2.default);
-      console.log(globalData);
     });
   });
 
@@ -268,7 +267,7 @@ var plugin = function plugin(editor) {
         name: s.t(l, "title"),
         url: "https://github.com/thedannywahl/sentimony/",
         author: "Danny Wahl",
-        version: "1.0.0"
+        version: "1.1.0"
       };
     }
   };
